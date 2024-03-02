@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String    @unique
+  alias          String?
+  hashedPassword String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  role           Role      @default(USER)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model File {
+  id        String   @id @default(cuid())
+  name      String
+  size      Int
+  type      String
+  link      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  folderId String
+  folder   Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+}
+
+model Folder {
+  id           String   @id @default(cuid())
+  name         String
+  userId       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  totalFiles   Int      @default(0)
+  totalFolders Int      @default(0)
+
+  filesCount      Int      @default(0)
+  files           File[]
+  subFoldersCount Int      @default(0)
+  subFolders      Folder[] @relation("SubFolders")
+
+  parentId String?
+  parent   Folder? @relation("SubFolders", fields: [parentId], references: [id], onDelete: Cascade)
+}
