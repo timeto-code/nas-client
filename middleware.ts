@@ -21,7 +21,11 @@ export default auth((request) => {
 
   // 如果是API请求，需要在其他判断和操作
   if (isApiRoute) {
-    // do something...
+    // 在登陆的时候需要通过API获取JWT
+    const isGetJWT = nextUrl.pathname.startsWith(`${apiRoutes}/auth/jwt`);
+    if (isGetJWT) {
+      return NextResponse.next();
+    }
   }
 
   if (isLoggedIn) {

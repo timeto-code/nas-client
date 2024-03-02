@@ -2,7 +2,7 @@
 
 import { LoginDto } from "@/DTOs/UserDTOs";
 import { signIn } from "@/auth";
-import logger from "@/lib/logger";
+import logger from "@/utils/logger";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 import { postData } from "../apiService";

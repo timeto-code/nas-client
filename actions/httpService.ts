@@ -1,9 +1,12 @@
-import logger from "@/lib/logger";
+import { env } from "@/utils/env.confi";
+import logger from "@/utils/logger";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { getKeys } from "./jwt/KeyManager";
+import generateJWT from "./jwt/generateJWT";
 
 // const date = new Date().toLocaleTimeString("zh-CN", { hour12: false });
 const date = new Date().toLocaleString("zh-CN", { hour12: false });
-const host = process.env.NEXT_PUBLIC_EXPRESS_HOST;
+const host = env.NEXT_PUBLIC_EXPRESS_HOST;
 const http = axios.create({
   baseURL: `http://${host}`,
   headers: {
@@ -12,20 +15,42 @@ const http = axios.create({
 });
 
 // 请求拦截器
-// http.interceptors.request.use(
-//   (config) => {
-//     // 在这里添加请求前需要执行的操作，比如设置token
-//     const token = localStorage.getItem("token");
-//     if (token) {
-//       config.headers["Authorization"] = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     // 对请求错误做些什么
-//     return Promise.reject(error);
-//   }
-// );
+http.interceptors.request.use(
+  (config) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // 异步操作：获取keys
+        const { privateKey, publicKey } = await getKeys();
+
+        // 检查keys是否有效
+        if (!privateKey || !publicKey) {
+          reject("Keys are missing");
+          return;
+        }
+
+        // 异步操作：生成JWT
+        const jwt = await generateJWT(privateKey);
+
+        // 检查JWT是否有效
+        if (!jwt) {
+          reject("JWT generation failed");
+          return;
+        }
+
+        // 如果JWT有效，添加到请求头
+        config.headers["Authorization"] = `Bearer ${jwt}`;
+        resolve(config); // 使用更新后的config解析Promise
+      } catch (error) {
+        // 处理异步操作中的错误
+        reject(error);
+      }
+    });
+  },
+  (error) => {
+    // 对请求错误做些什么
+    return Promise.reject(error);
+  }
+);
 
 // 添加响应拦截器
 http.interceptors.response.use(

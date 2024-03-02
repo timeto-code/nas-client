@@ -1,7 +1,7 @@
 "use client";
 
+import { useThemeStore } from "@/lib/stores/store";
 import styles from "@/styles/AppCard.module.scss";
-import "@/styles/AppCard.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -13,6 +13,7 @@ interface AppCardProps {
 
 const AppCard = ({ name, src, isDeveloping }: AppCardProps) => {
   const router = useRouter();
+  const theme = useThemeStore((state) => state.theme);
 
   const handleClick = () => {
     switch (name) {
@@ -27,7 +28,10 @@ const AppCard = ({ name, src, isDeveloping }: AppCardProps) => {
 
   return (
     <div className="relative">
-      <button className="appCard" onClick={handleClick}>
+      <button
+        className={theme === "light" ? styles.appCard : styles.appCard_dark}
+        onClick={handleClick}
+      >
         <Image src={src} width={80} height={80} alt="" />
         <span>{name}</span>
       </button>

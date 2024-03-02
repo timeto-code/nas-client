@@ -1,8 +1,9 @@
 "use client";
 
+import { useThemeStore } from "@/lib/stores/store";
 import { useTheme } from "next-themes";
-import { Switch } from "./ui/switch";
 import LogoutButton from "./auth/LogoutButton";
+import { Switch } from "./ui/switch";
 
 const ThemeSwitch = () => {
   const { setTheme } = useTheme();
@@ -10,8 +11,10 @@ const ThemeSwitch = () => {
   const handleThemeChange = (checked: boolean) => {
     if (checked) {
       setTheme("dark");
+      useThemeStore.setState({ theme: "dark" });
     } else {
       setTheme("light");
+      useThemeStore.setState({ theme: "light" });
     }
   };
 

@@ -1,10 +1,10 @@
+import { Folder, User } from "@prisma/client";
+import axios, { AxiosError } from "axios";
 import NextAuth from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { GetUserDto, LoginDto } from "./DTOs/UserDTOs";
-import axios from "axios";
-import { Folder, User } from "@prisma/client";
-import logger from "./lib/logger";
+import { env } from "./utils/env.confi";
 
 export const {
   handlers: { GET, POST },
@@ -18,33 +18,44 @@ export const {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials, req) => {
+        console.log("credentials", credentials);
+
         try {
           const { username, password } = credentials as z.infer<
             typeof LoginDto
           >;
           const data: z.infer<typeof GetUserDto> = { name: username };
 
-          // const userRes = await getUserByInfo(data);
-          // if (userRes.error) return null;
-          // const user = userRes as User;
+          const jwtRes = await axios.get("/api/auth/jwt");
+          if (jwtRes.status !== 200) return null;
+          const { jwt } = jwtRes.data;
 
-          // const folderRes = await getUserRootFolder(user.id);
-          // if (folderRes.error) return null;
-          // const userRootFolder = folderRes as Folder;
-
-          const host = process.env.NEXT_PUBLIC_EXPRESS_HOST;
-          const res = await axios.post(`http://${host}/api/user/fetch`, data);
-          const user = res.data as User;
-          console.log("user", user);
-          const res2 = await axios.get(
-            `http://${host}/api/folder/fetchUserRoot/${user.id}`
+          const host = env.NEXT_PUBLIC_EXPRESS_HOST;
+          const userRes = await axios.post(
+            `http://${host}/api/user/fetch`,
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json",
+              },
+            }
           );
-          const userRootFolder = res2.data as Folder;
-          console.log("userRootFolder", userRootFolder);
+          const user = userRes.data as User;
+
+          const folderRes = await axios.get(
+            `http://${host}/api/folder/fetchUserRoot/${user.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const userRootFolder = folderRes.data as Folder;
 
           return { ...user, rootFolderId: userRootFolder.id };
         } catch (error) {
-          console.log(error);
           return null;
         }
       },
