@@ -23,7 +23,7 @@ const generateJWT = async (privateKey: KeyObject) => {
       // 设置接收者
       .setAudience(env.JWT_AUDIENCE)
       // 设置过期时间为3分钟
-      .setExpirationTime("3 minute")
+      .setExpirationTime("10 minute")
       // 设置JWT ID
       .setJti(uuidv4())
       // 设置开始生效时间1小时后
