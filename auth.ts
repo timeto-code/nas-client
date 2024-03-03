@@ -29,7 +29,7 @@ export const {
           const jwtRes = await axios.get("/api/auth/jwt");
           if (jwtRes.status !== 200) return null;
           const { jwt } = jwtRes.data;
-          console.log("jwt", jwt);
+          console.log("jwt 生成成功");
 
           const host = env.NEXT_PUBLIC_EXPRESS_HOST;
           const userRes = await axios.post(
@@ -43,7 +43,7 @@ export const {
             }
           );
           const { user } = userRes.data as { user: User };
-          console.log("user", user);
+          console.log(`用户获取成功 [${user.id}]`);
 
           const folderRes = await axios.get(
             `http://${host}/api/folder/fetchUserRoot/${user.id}`,
@@ -55,7 +55,7 @@ export const {
             }
           );
           const { folder } = folderRes.data as { folder: Folder };
-          console.log("folder", folder);
+          console.log(`用户根目录获取成功 [${folder.id}]`);
 
           return { ...user, rootFolderId: folder.id };
         } catch (error) {
