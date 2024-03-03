@@ -5,8 +5,6 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
-    console.log("GET JWT");
-
     // 异步操作：获取keys
     const { privateKey, publicKey } = await getKeys();
 
