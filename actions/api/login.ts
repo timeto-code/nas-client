@@ -37,7 +37,6 @@ export const login = async (data: z.infer<typeof LoginDto>) => {
       redirect: false,
     });
   } catch (error) {
-    console.log("in error");
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
@@ -54,6 +53,7 @@ export const login = async (data: z.infer<typeof LoginDto>) => {
     }
 
     // throw error;
+    logger.error(`登录失败: ${error}`);
     return {
       error: "请检查您的用户名和密码。或者联系管理员。",
     };
