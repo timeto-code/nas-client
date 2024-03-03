@@ -1,6 +1,7 @@
 import { RenameFileDto } from "@/DTOs/FileDTOs";
 import { UpdateFileNameById, deleteFile } from "@/actions/api/file";
 import { deleteFolder, updateFolderNameById } from "@/actions/api/folder";
+import FileIcon from "@/components/FileIcon";
 import Spinner from "@/components/Spinner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -19,36 +20,6 @@ import npmDate from "date-and-time";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { z } from "zod";
-
-/**
- * @description 文件图标列
- * @param param0
- * @returns
- *
- */
-const ItemIcon = ({ item }: { item: File | Folder }) => {
-  const isFile = "type" in item;
-
-  return (
-    <>
-      {isFile ? (
-        <Image
-          src="/icons/icons8-cloud-file-96.png"
-          alt={item.name}
-          width={20}
-          height={20}
-        />
-      ) : (
-        <Image
-          src="/icons/icons8-folder.svg"
-          alt={item.name}
-          width={18}
-          height={18}
-        />
-      )}
-    </>
-  );
-};
 
 /**
  * @description 修改日期列
@@ -246,7 +217,7 @@ const ListItem = ({
     >
       <div className="flex items-center gap-2 w-auto ">
         <Checkbox />
-        <ItemIcon item={item} />
+        <FileIcon item={item} width={20} height={20} />
         {renameItemId === item.id ? (
           <>
             <Input
@@ -276,7 +247,7 @@ const ListItem = ({
             style={{
               width: `${nameWidth}px`,
             }}
-            className="relative flex items-center justify-between hover:pr-24 overflow-hidden truncate cursor-default"
+            className="relative flex items-center justify-between group-hover:pr-24 overflow-hidden truncate cursor-default"
           >
             <span className="truncate ">{newName}</span>
 

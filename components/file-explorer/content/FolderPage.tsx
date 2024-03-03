@@ -52,15 +52,14 @@ const FolderPage = ({ user }: Props) => {
 
   return (
     <div className="h-full w-full pb-7">
-      <div
-        ref={containerRef}
-        className="h-full mr-[2px] p-4 w-full relative overflow-auto"
-      >
-        {isTablet ? (
-          <List items={items} />
-        ) : (
-          <Masonry containerWith={width} items={items} />
-        )}
+      <div className="h-full pr-1 px-4 pt-4 w-full">
+        <div ref={containerRef} className="h-full relative overflow-auto">
+          {isTablet ? (
+            <List items={items} />
+          ) : (
+            <Masonry containerWith={width} items={items} />
+          )}
+        </div>
       </div>
       <div className="absolute bottom-0 inset-x-0 h-7">
         <DetailBar folderCount={folderCount} fileCount={fileCount}>

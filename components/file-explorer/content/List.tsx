@@ -56,8 +56,8 @@ const List = ({ items }: { items: (File | Folder)[] }) => {
   };
 
   return (
-    <div ref={containerRef} className="w-[900px] h-full" onClick={handleClick}>
-      <div className="h-full flex flex-col gap-1 ">
+    <div ref={containerRef} className="h-full w-full" onClick={handleClick}>
+      <div className="h-full w-[900px] flex flex-col gap-1 ">
         <div className="h-8 px-2 flex items-center gap-2">
           <div className="w-10">
             <Checkbox />

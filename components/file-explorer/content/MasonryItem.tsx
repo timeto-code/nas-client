@@ -1,3 +1,4 @@
+import FileIcon from "@/components/FileIcon";
 import downlaod from "@/lib/download";
 import { useFolderStore } from "@/lib/stores/useFolderStore";
 import { File, Folder } from "@prisma/client";
@@ -9,48 +10,7 @@ interface MasonryItemProps {
 }
 
 const MasonryItem = ({ item }: MasonryItemProps) => {
-  const [isFile, setIsFile] = useState(false);
-  const [scr, setScr] = useState("");
-
-  useEffect(() => {
-    if ("type" in item) {
-      setIsFile(true);
-      switch (item.type) {
-        case "mp3":
-        case "wav":
-          setScr("/icons/audio-file.png");
-          break;
-
-        case "mp4":
-        case "avi":
-        case "mkv":
-          setScr("/icons/video-file.png");
-          break;
-
-        case "jpg":
-        case "png":
-        case "jpeg":
-          setScr("/icons/image-file.png");
-          break;
-
-        case "doc":
-        case "docx":
-          setScr("/icons/word-file.png");
-          break;
-
-        case "ppt":
-        case "pdf":
-          setScr("/icons/ppt-file.png");
-          break;
-
-        default:
-          setScr("/icons/icons8-cloud-file-96.png");
-          break;
-      }
-    } else {
-      setScr("/icons/icons8-folder.svg");
-    }
-  }, [item]);
+  const isFile = "type" in item;
 
   const handleDoubleClick = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -67,19 +27,10 @@ const MasonryItem = ({ item }: MasonryItemProps) => {
 
   return (
     <div className="w-20" onDoubleClick={handleDoubleClick}>
-      <div className="flex flex-col items-center group hover:bg-[#e5f3ff]/20 p-2 transition-all duration-300 rounded-sm">
-        {/* <Image
-        className="cursor-pointer group-hover:scale-125 transition-all duration-300 "
-        src={scr}
-        alt="folder"
-        width={50}
-        height={50}
-        priority
-      /> */}
-        <img
+      <div className="flex flex-col items-center group hover:bg-sky-300/30 dark:hover:bg-sky-200/30 p-2 transition-all duration-300 rounded-[1px]">
+        <FileIcon
           className="cursor-pointer group-hover:scale-105 transition-all duration-300 "
-          src={scr}
-          alt="folder"
+          item={item}
           width={50}
           height={50}
         />
