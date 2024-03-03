@@ -5,5 +5,5 @@ interface ThemeStore {
 }
 
 export const useThemeStore = create<ThemeStore>((set) => ({
-  theme: "system",
+  theme: "light",
 }));

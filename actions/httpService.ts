@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { env } from "@/utils/env.confi";
 import logger from "@/utils/logger";
 import axios, { AxiosError, AxiosResponse } from "axios";
@@ -19,10 +20,20 @@ http.interceptors.request.use(
   (config) => {
     return new Promise(async (resolve, reject) => {
       try {
+        if (
+          config.url !== "/api/user/login" &&
+          config.url !== "/api/user/register"
+        ) {
+          // 登录后的所有都需要验证用户状态
+          const session = await auth();
+          if (!session || !session.user) {
+            reject("Authentication failed, please log in and try again!");
+            return;
+          }
+        }
+
         // 异步操作：获取keys
         const { privateKey, publicKey } = await getKeys();
-
-        // 检查keys是否有效
         if (!privateKey || !publicKey) {
           reject("Keys are missing");
           return;
@@ -30,16 +41,16 @@ http.interceptors.request.use(
 
         // 异步操作：生成JWT
         const jwt = await generateJWT(privateKey);
-
-        // 检查JWT是否有效
         if (!jwt) {
           reject("JWT generation failed");
           return;
         }
 
-        // 如果JWT有效，添加到请求头
+        // 更新请求头
         config.headers["Authorization"] = `Bearer ${jwt}`;
-        resolve(config); // 使用更新后的config解析Promise
+
+        // 返回配置
+        resolve(config);
       } catch (error) {
         // 处理异步操作中的错误
         reject(error);
@@ -91,6 +102,7 @@ http.interceptors.response.use(
       // 发送请求时出了点问题
       logger.error(`[${date}] 请求发送失败`);
     }
+    logger.error(error);
     return Promise.reject(error);
   }
 );

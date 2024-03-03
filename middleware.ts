@@ -10,7 +10,6 @@ import {
 // This function can be marked `async` if using `await` inside
 export default auth((request) => {
   const { nextUrl } = request;
-  console.log("nextUrl", nextUrl);
 
   // 判断路由信息
   const isApiRoute = nextUrl.pathname.startsWith(apiRoutes);
@@ -19,7 +18,6 @@ export default auth((request) => {
 
   // 判断身份验证状态
   const isLoggedIn = !!request.auth;
-  console.log("isLoggedIn", request.auth);
 
   // 如果是API请求，需要在其他判断和操作
   if (isApiRoute) {

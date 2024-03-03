@@ -15,7 +15,7 @@ export const register = async (data: z.infer<typeof RegisterDto>) => {
   }
 
   try {
-    await postData("/api/user/create", data);
+    await postData("/api/user/register", data);
     return { success: "注册成功" };
   } catch (error) {
     const err = error as AxiosError;

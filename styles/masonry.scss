@@ -1,0 +1,26 @@
+// .my-masonry-grid {
+//   display: flex;
+//   gap: 18px;
+//   width: auto;
+// }
+// .my-masonry-grid_column {
+// }
+
+// /* Style your items */
+// .my-masonry-grid_column > div {
+//   padding-top: 4px;
+//   padding-bottom: 2px;
+//   // margin-top: 16px;
+// }
+
+// .masonryContainer {
+//   display: flex;
+//   justify-content: center;
+//   padding: 0px 16px;
+// }
+
+.masonryContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 100px));
+  grid-gap: 16px; /* 或您希望的任何间隙大小 */
+}

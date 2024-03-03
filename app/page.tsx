@@ -1,14 +1,19 @@
+import { auth } from "@/auth";
 import AppCard from "@/components/AppCard";
+import ThemeSwitch from "@/components/ThemeSwitch";
+import Welcome from "@/components/Welcome";
+import LogoutButton from "@/components/file-explorer/navbar/LogoutButton";
 // import authUser from "@/lib/authUser";
 
 export default async function Home() {
-  // const user = await authUser();
-  // if (!user) return null;
+  const session = await auth();
+  if (!session) return null;
 
   return (
-    // <div className="bg-[#444444] h-full overflow-auto">
-    <div className="h-full overflow-auto">
-      <h1 className="py-20 flex items-center justify-center">上午好 ~</h1>
+    <div className="h-full relative">
+      <h1 className="py-20 flex items-center justify-center">
+        <Welcome user={session.user} />
+      </h1>
       <div>
         <div className="flex items-center justify-center gap-6 h-full">
           <AppCard name="资源管理器" src="/images/documents_folder_18875.png" />
@@ -24,6 +29,10 @@ export default async function Home() {
           />
           <AppCard src="/images/cave_man_emoticon_emoji_sticker_inventor_icon.svg" />
         </div>
+      </div>
+      <div className="fixed top-5 right-5 flex items-center gap-5">
+        <ThemeSwitch />
+        <LogoutButton />
       </div>
     </div>
   );

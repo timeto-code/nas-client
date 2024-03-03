@@ -59,3 +59,12 @@ model Folder {
   parentId String?
   parent   Folder? @relation("SubFolders", fields: [parentId], references: [id], onDelete: Cascade)
 }
+
+model Download_Token {
+  id        String   @id @default(cuid())
+  fileId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -96,3 +96,13 @@
 2024-03-03 00:21:58 [error] JWT 生成失败: TypeError: res.status is not a function
 2024-03-03 00:21:58 [error] 密码错误
 2024-03-03 00:33:52 [debug] JWT=========>: eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpZCI6IlIxaExza203L0tDa1BuMEZBQ2phMys1M3A1M0VWUDBsK3BLMGVkWGs2STQ9Iiwic3ViIjoibmlraS1uYXMiLCJpYXQiOjE3MDkzOTcyMzIsImlzcyI6Im5pa2kiLCJhdWQiOiJodHRwczovL25pa2ktbmFzLmNvbSIsImV4cCI6MTcwOTM5NzI2MiwianRpIjoiYjM5YTI5NjktZWMwNy00YjBmLWFiODItZmNkYzE1ODg4ZDU4In0.VqfFVOuZxR1XwC3GeNyB0ckZhHI9SehMCh7GKwjtGKv3awVs98ubvqgbEHwJSdcss1zTS1qtiEijOTB670K0Aw
+2024-03-03 19:03:59 [error] [2024/3/3 19:03:59] 请求发送失败
+2024-03-03 19:04:07 [error] [2024/3/3 19:03:59] 请求发送失败
+2024-03-03 19:04:12 [error] [2024/3/3 19:03:59] 请求发送失败
+2024-03-03 19:04:21 [error] [2024/3/3 19:03:59] 请求发送失败
+2024-03-03 19:05:52 [error] [2024/3/3 19:05:52] 请求发送失败
+2024-03-03 19:05:52 [error] Authentication failed, please log in and try again!
+2024-03-03 19:07:48 [error] [2024/3/3 19:07:48] 请求发送失败
+2024-03-03 19:07:48 [error] Authentication failed, please log in and try again!
+2024-03-03 19:49:06 [error] [2024/3/3 19:49:06] 请求发送失败
+2024-03-03 19:49:06 [error] Authentication failed, please log in and try again!
