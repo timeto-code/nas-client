@@ -4,7 +4,6 @@ import logger from "@/utils/logger";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import generateJWT from "./generateJWT";
 
-// const date = new Date().toLocaleTimeString("zh-CN", { hour12: false });
 const date = new Date().toLocaleString("zh-CN", { hour12: false });
 const host = env.NEXT_PUBLIC_EXPRESS_HOST;
 const http = axios.create({
@@ -86,16 +85,15 @@ http.interceptors.response.use(
       const message =
         (error.response.data as { message?: string }).message || "未知错误 ";
       logger.error(
-        `[${date}] 请求错误 [${error.response.status}] ${message} [${method}] ${error.response.config.url}`
+        `请求错误 [${error.response.status}] ${message} [${method}] ${error.response.config.url}`
       );
     } else if (error.request) {
       // 请求已经发起，但没有收到响应
-      logger.error(`[${date}] 服务器没有响应`);
+      logger.error(`服务器没有响应`);
     } else {
       // 发送请求时出了点问题
-      logger.error(`[${date}] 请求发送失败`);
+      logger.error(`请求发送失败`);
     }
-    logger.error(error);
     return Promise.reject(error);
   }
 );

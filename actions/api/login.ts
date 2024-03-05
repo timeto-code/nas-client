@@ -15,19 +15,16 @@ export const login = async (data: z.infer<typeof LoginDto>) => {
     return { error: "验证失败，但没有具体的错误信息" };
   }
 
-  // 服务器端进行用户验证
   try {
+    // 服务器端进行用户验证
     await postData("/api/user/login", data);
-  } catch (error) {
-    return { error: "用户名或密码无效" };
-  }
+    const { username, password } = data;
 
-  const { username, password } = data;
+    logger.debug(`用户 ${username} 登录成功`);
 
-  // 这里也可以做身份身份验证，但是详细验证错误信息不知道怎么返回
-  // 所以在 action 中做验证，返回错误信息
-  // 在 authjs 只获取用户信息用来生成token
-  try {
+    // 这里也可以做身份身份验证，但是详细验证错误信息不知道怎么返回
+    // 所以在 action 中做验证，返回错误信息
+    // 在 authjs 只获取用户信息用来生成token
     await signIn("credentials", {
       username,
       password,
@@ -53,7 +50,6 @@ export const login = async (data: z.infer<typeof LoginDto>) => {
     }
 
     // throw error;
-    logger.error(`登录失败: ${error}`);
     return {
       error: "请检查您的用户名和密码。或者联系管理员。",
     };

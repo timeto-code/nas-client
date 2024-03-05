@@ -33,7 +33,7 @@ export const {
 
           const host = env.NEXT_PUBLIC_EXPRESS_HOST;
           const userRes = await axios.post(
-            `http://${host}/api/user/fetch`,
+            `http://${host}/api/user/login/fetch`,
             data,
             {
               headers: {
@@ -46,7 +46,7 @@ export const {
           console.log(`用户获取成功 [${user.id}]`);
 
           const folderRes = await axios.get(
-            `http://${host}/api/folder/fetchUserRoot/${user.id}`,
+            `http://${host}/api/folder/login/fetchUserRoot/${user.id}`,
             {
               headers: {
                 Authorization: `Bearer ${jwt}`,
@@ -54,6 +54,8 @@ export const {
               },
             }
           );
+          console.log(`folderRes`, folderRes.data);
+
           const { folder } = folderRes.data as { folder: Folder };
           console.log(`用户根目录获取成功 [${folder.id}]`);
 

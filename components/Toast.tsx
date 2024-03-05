@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { useToast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 import { useToastStore } from "@/lib/stores/useToastStore";
+import { Toaster } from "./ui/toaster";
 
 const Toast = () => {
   const ref = useRef<HTMLButtonElement | null>(null);
@@ -20,22 +21,25 @@ const Toast = () => {
   }, [title, description, refresh]);
 
   return (
-    <Button
-      className="hidden"
-      ref={ref}
-      variant="outline"
-      onClick={() => {
-        toast({
-          title,
-          description,
-          className: "rounded-lg my-1 p-4",
-          duration: 4000,
-          variant: varient,
-        });
-      }}
-    >
-      Show Toast
-    </Button>
+    <>
+      <Toaster />
+      <Button
+        className="hidden"
+        ref={ref}
+        variant="outline"
+        onClick={() => {
+          toast({
+            title,
+            description,
+            className: "rounded-lg my-1 p-4",
+            duration: 4000,
+            variant: varient,
+          });
+        }}
+      >
+        Show Toast
+      </Button>
+    </>
   );
 };
 

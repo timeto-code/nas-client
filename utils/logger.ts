@@ -38,12 +38,13 @@ const logger = createLogger({
               format.colorize(),
               format.simple(),
               format.printf(
-                ({ level, message, timestamp }) => `[${level}]: ${message}`
+                ({ level, message, timestamp }) =>
+                  `${timestamp} [${level}]: ${message}`
               )
             ),
           }),
         ]),
-
+    // 打印debug级别以上的所有日志
     new transports.File({
       filename: "combined.log",
       level: "debug",
@@ -52,6 +53,25 @@ const logger = createLogger({
       dirname: path.join(env.PROJECT_ROOT!, "logs"),
     }),
 
+    // 打印info级别以上的所有日志
+    new transports.File({
+      filename: "info.log",
+      level: "info",
+      maxsize: 5242880,
+      maxFiles: 5,
+      dirname: path.join(env.PROJECT_ROOT!, "logs"),
+    }),
+
+    // 打印warn级别以上的所有日志
+    new transports.File({
+      filename: "warn.log",
+      level: "warn",
+      maxsize: 5242880,
+      maxFiles: 5,
+      dirname: path.join(env.PROJECT_ROOT!, "logs"),
+    }),
+
+    // 打印error级别以上的所有日志
     new transports.File({
       filename: "errors.log",
       level: "error",

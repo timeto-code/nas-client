@@ -2,8 +2,10 @@ import { auth } from "@/auth";
 import AppCard from "@/components/AppCard";
 import GenerateNewKey from "@/components/GenerateNewKey";
 import ThemeSwitch from "@/components/ThemeSwitch";
+import Toast from "@/components/Toast";
 import Welcome from "@/components/Welcome";
 import LogoutButton from "@/components/file-explorer/navbar/LogoutButton";
+import { Toaster } from "@/components/ui/toaster";
 // import authUser from "@/lib/authUser";
 
 export default async function Home() {
@@ -36,6 +38,7 @@ export default async function Home() {
         <ThemeSwitch />
         <LogoutButton />
       </div>
+      <Toast />
     </div>
   );
 }
