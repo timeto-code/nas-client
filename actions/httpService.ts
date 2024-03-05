@@ -2,8 +2,7 @@ import { auth } from "@/auth";
 import { env } from "@/utils/env.confi";
 import logger from "@/utils/logger";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { getKeys } from "./jwt/KeyManager";
-import generateJWT from "./jwt/generateJWT";
+import generateJWT from "./generateJWT";
 
 // const date = new Date().toLocaleTimeString("zh-CN", { hour12: false });
 const date = new Date().toLocaleString("zh-CN", { hour12: false });
@@ -20,27 +19,21 @@ http.interceptors.request.use(
   (config) => {
     return new Promise(async (resolve, reject) => {
       try {
+        // 获取用户会话状态
+        const session = await auth();
+        // 非登录和注册请求需要验证 session 状态
         if (
           config.url !== "/api/user/login" &&
           config.url !== "/api/user/register"
         ) {
-          // 登录后的所有都需要验证用户状态
-          const session = await auth();
           if (!session || !session.user) {
             reject("Authentication failed, please log in and try again!");
             return;
           }
         }
 
-        // 异步操作：获取keys
-        const { privateKey, publicKey } = await getKeys();
-        if (!privateKey || !publicKey) {
-          reject("Keys are missing");
-          return;
-        }
-
         // 异步操作：生成JWT
-        const jwt = await generateJWT(privateKey);
+        const jwt = await generateJWT(session);
         if (!jwt) {
           reject("JWT generation failed");
           return;

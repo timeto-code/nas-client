@@ -4,7 +4,7 @@ import { env } from "./env.confi";
 
 const logger = createLogger({
   // 设置日志的最低级别为"debug"，即只记录"info"级别以上的日志。
-  level: process.env.LOG_LEVEL,
+  level: process.env.NODE_ENV === "production" ? "info" : "debug",
 
   // 使用format.combine结合多个日志格式化选项。
   format: format.combine(

@@ -26,6 +26,7 @@ const Toast = () => {
       variant="outline"
       onClick={() => {
         toast({
+          title,
           description,
           className: "rounded-lg my-1 p-4",
           duration: 4000,

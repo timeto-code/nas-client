@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import AppCard from "@/components/AppCard";
+import GenerateNewKey from "@/components/GenerateNewKey";
 import ThemeSwitch from "@/components/ThemeSwitch";
 import Welcome from "@/components/Welcome";
 import LogoutButton from "@/components/file-explorer/navbar/LogoutButton";
@@ -31,6 +32,7 @@ export default async function Home() {
         </div>
       </div>
       <div className="fixed top-5 right-5 flex items-center gap-5">
+        <GenerateNewKey />
         <ThemeSwitch />
         <LogoutButton />
       </div>
