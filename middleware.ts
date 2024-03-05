@@ -26,6 +26,14 @@ export default auth((request) => {
     if (isAuth) {
       return NextResponse.next();
     }
+
+    // 设置页面
+    const isSetup = nextUrl.pathname.startsWith(`${apiRoutes}/setup`);
+    if (isSetup) {
+      console.log("设置页面请求.....");
+
+      return NextResponse.next();
+    }
   }
 
   if (isLoggedIn) {

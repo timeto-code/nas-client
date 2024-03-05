@@ -1,13 +1,13 @@
 import { auth } from "@/auth";
-import { env } from "@/utils/env.confi";
 import logger from "@/utils/logger";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import generateJWT from "./generateJWT";
+import { server } from "./server";
 
 const date = new Date().toLocaleString("zh-CN", { hour12: false });
-const host = env.NEXT_PUBLIC_EXPRESS_HOST;
+
 const http = axios.create({
-  baseURL: `http://${host}`,
+  baseURL: `${server}`,
   headers: {
     "Content-Type": "application/json",
   },

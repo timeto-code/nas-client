@@ -8,8 +8,10 @@ const downlaod = async (link: string, name: string) => {
     const { jwt } = jwtRes.data;
     console.log("jwt 生成成功");
 
-    const host = process.env.NEXT_PUBLIC_EXPRESS_HOST;
-    const res = await axios.get(`http://${host}/api/file/token/${link}`, {
+    const serverInfo = await axios.get("/api/setup");
+    const { server } = serverInfo.data;
+
+    const res = await axios.get(`${server}/api/file/token/${link}`, {
       headers: {
         Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
@@ -17,6 +19,8 @@ const downlaod = async (link: string, name: string) => {
     });
 
     const url = res.data.downloadLink as string;
+
+    console.log("url", url);
 
     // 尝试获取文件头信息来检查文件是否可达
     const response = await fetch(url, { method: "HEAD" });

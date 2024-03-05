@@ -12,7 +12,7 @@ export const generateAsymmetrickey = async () => {
     const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
 
     // 确保key目录存在，如果不存在则创建
-    const keyDirPath = path.resolve(env.PROJECT_ROOT!, "jwt");
+    const keyDirPath = path.resolve(env.PROJECT_ROOT!, "keys");
     await fs.mkdir(keyDirPath, { recursive: true });
 
     // 将公钥和私钥写入文件
