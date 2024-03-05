@@ -51,7 +51,7 @@ jobs:
           cp package.json client/package.json
           cp package-lock.json client/package-lock.json
           cp ecosystem.config.js client/ecosystem.config.js
-          cp readme.md client/readme.md
+          cp README.md client/README.md
           cp LICENSE client/LICENSE
 
       - name: Zip production artifacts
