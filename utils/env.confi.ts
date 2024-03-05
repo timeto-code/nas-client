@@ -1,5 +1,4 @@
 const env = {
-  NEXT_PUBLIC_EXPRESS_HOST: process.env.NEXT_PUBLIC_EXPRESS_HOST!,
   // 项目根目录
   PROJECT_ROOT: process.env.PROJECT_ROOT!,
   // 非对称加密密钥路径

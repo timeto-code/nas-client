@@ -4,7 +4,6 @@ import NextAuth from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { GetUserDto, LoginDto } from "./DTOs/UserDTOs";
-import { env } from "./utils/env.confi";
 
 export const {
   handlers: { GET, POST },
@@ -31,9 +30,11 @@ export const {
           const { jwt } = jwtRes.data;
           console.log("jwt 生成成功");
 
-          const host = env.NEXT_PUBLIC_EXPRESS_HOST;
+          const serverInfo = await axios.get("/api/setup");
+          const { server } = serverInfo.data;
+
           const userRes = await axios.post(
-            `http://${host}/api/user/login/fetch`,
+            `${server}/api/user/login/fetch`,
             data,
             {
               headers: {
@@ -46,7 +47,7 @@ export const {
           console.log(`用户获取成功 [${user.id}]`);
 
           const folderRes = await axios.get(
-            `http://${host}/api/folder/login/fetchUserRoot/${user.id}`,
+            `${server}/api/folder/login/fetchUserRoot/${user.id}`,
             {
               headers: {
                 Authorization: `Bearer ${jwt}`,

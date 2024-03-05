@@ -2,7 +2,7 @@
 export const apiRoutes = "/api";
 
 /********** 未登录时就可访问的路由 **********/
-export const publicRoutes = ["/verification"];
+export const publicRoutes = ["/setup"];
 
 /********** 只有特殊操作：登录、登出、验证、等等...才可以访问的特定路由 **********/
 export const authRoutes = [

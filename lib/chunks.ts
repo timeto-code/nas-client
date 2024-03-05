@@ -1,7 +1,24 @@
+import { getFolderById } from "@/actions/api/folder";
+import axios from "axios";
+import { useToastStore } from "./stores/useToastStore";
+
 const uploadFiles = async (files: File[], folderId: string) => {
   const chunkSize = 1024 * 1024; // 分块大小，这里我们使用1MB，你可以根据需要调整
+
+  const res = await getFolderById(folderId); // 确保文件夹存在
+  if (res.error) {
+    useToastStore.setState((state) => ({
+      description: "上传失败！",
+      refresh: !state.refresh,
+    }));
+    return;
+  }
+
+  const serverInfo = await axios.get("/api/setup");
+  const { server } = serverInfo.data;
+
   const uploadPromises = Array.from(files).map((file) =>
-    uploadFileInChunks(file, chunkSize, folderId)
+    uploadFileInChunks(file, chunkSize, folderId, server)
   );
 
   try {
@@ -15,23 +32,31 @@ const uploadFiles = async (files: File[], folderId: string) => {
 const uploadFileInChunks = async (
   file: File,
   chunkSize: number,
-  folderId: string
+  folderId: string,
+  server: string
 ) => {
   const totalChunks = Math.ceil(file.size / chunkSize);
   const chunkUploadPromises = [];
-
+  const timestamp = new Date().getTime();
   for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
     const chunk = file.slice(
       chunkIndex * chunkSize,
       (chunkIndex + 1) * chunkSize
     );
     const isLastChunk = chunkIndex === totalChunks - 1;
-    chunkUploadPromises.push(
-      uploadChunk(chunk, chunkIndex, file.name, isLastChunk, folderId)
+    // chunkUploadPromises.push(
+    await uploadChunk(
+      chunk,
+      chunkIndex,
+      `${timestamp}${folderId}-${file.name}`,
+      isLastChunk,
+      folderId,
+      server
     );
+    // );
   }
 
-  await Promise.all(chunkUploadPromises);
+  // await Promise.all(chunkUploadPromises);
   console.log(`File ${file.name} uploaded successfully`);
 };
 
@@ -40,7 +65,8 @@ const uploadChunk = async (
   chunkIndex: number,
   fileName: string,
   isLastChunk: boolean,
-  folderId: string
+  folderId: string,
+  server: string
 ) => {
   const formData = new FormData();
   formData.append("file", chunk);
@@ -50,8 +76,7 @@ const uploadChunk = async (
   formData.append("folderId", folderId);
 
   try {
-    const host = process.env.NEXT_PUBLIC_EXPRESS_HOST;
-    const response = await fetch(`http://${host}/api/file/upload`, {
+    const response = await fetch(`${server}/api/file/upload`, {
       method: "POST",
       body: formData,
     });
