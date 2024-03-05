@@ -14,3 +14,4 @@
 2024-03-05 22:29:30 [error] 密钥生成失败: Error: ENOENT: no such file or directory, open 'D:\GitHub\remote-nas-client-v2\keys\public-key.pem'
 2024-03-05 22:31:01 [error] 密钥生成失败: Error: EISDIR: illegal operation on a directory, open 'D:\GitHub\remote-nas-client-v2\key'
 2024-03-05 22:31:14 [error] 密钥生成失败: Error: ENOENT: no such file or directory, open 'D:\GitHub\remote-nas-client-v2\keys\public-key.pem'
+2024-03-06 00:01:50 [error] 请求错误 [401] Unauthorized [POST] /api/user/login

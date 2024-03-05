@@ -184,3 +184,5 @@
 2024-03-05 22:31:14 [error] 密钥生成失败: Error: ENOENT: no such file or directory, open 'D:\GitHub\remote-nas-client-v2\keys\public-key.pem'
 2024-03-05 22:31:28 [info] 新密钥已生成
 2024-03-05 22:32:07 [info] 新密钥已生成
+2024-03-06 00:01:50 [error] 请求错误 [401] Unauthorized [POST] /api/user/login
+2024-03-06 00:02:22 [debug] 用户 niki 登录成功
