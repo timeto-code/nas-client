@@ -1,6 +1,7 @@
 import { getFolderById } from "@/actions/api/folder";
 import axios from "axios";
 import { useToastStore } from "./stores/useToastStore";
+import { ProgressFile, useUploadStore } from "./stores/useUploadStore";
 
 const uploadFiles = async (files: File[], folderId: string) => {
   const chunkSize = 1024 * 1024; // 分块大小，这里我们使用1MB，你可以根据需要调整
@@ -38,14 +39,35 @@ const uploadFileInChunks = async (
   const totalChunks = Math.ceil(file.size / chunkSize);
   const chunkUploadPromises = [];
   const timestamp = new Date().getTime();
+
+  const setFiles = useUploadStore.getState().setFiles;
+  const progrssFile: ProgressFile = {
+    id: `${timestamp}${folderId}-${file.name}`,
+    name: file.name,
+    size: file.size,
+    totalChunks,
+    progress: 0,
+    status: "pending",
+    progressSize: 0,
+  };
+  setFiles(progrssFile);
+
+  const setProgress = useUploadStore.getState().setProgress;
+  const setStatus = useUploadStore.getState().setStatus;
+  let uploadStatus = true;
   for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
     const chunk = file.slice(
       chunkIndex * chunkSize,
       (chunkIndex + 1) * chunkSize
     );
+    setProgress(
+      `${timestamp}${folderId}-${file.name}`,
+      chunkIndex + 1,
+      chunk.size
+    );
     const isLastChunk = chunkIndex === totalChunks - 1;
     // chunkUploadPromises.push(
-    await uploadChunk(
+    const uploadStatus = await uploadChunk(
       chunk,
       chunkIndex,
       `${timestamp}${folderId}-${file.name}`,
@@ -53,11 +75,16 @@ const uploadFileInChunks = async (
       folderId,
       server
     );
+
+    if (!uploadStatus) {
+      setStatus(`${timestamp}${folderId}-${file.name}`, "error");
+      return;
+    }
     // );
   }
 
+  setStatus(`${timestamp}${folderId}-${file.name}`, "success");
   // await Promise.all(chunkUploadPromises);
-  console.log(`File ${file.name} uploaded successfully`);
 };
 
 const uploadChunk = async (
@@ -81,12 +108,16 @@ const uploadChunk = async (
       body: formData,
     });
     if (!response.ok) {
-      throw new Error(`Upload failed for chunk ${chunkIndex} of ${fileName}`);
+      return false;
+      // 抛出异常让Promise.all可以捕获
+      // throw new Error(`Upload failed for chunk ${chunkIndex} of ${fileName}`);
     }
     console.log(`Chunk ${chunkIndex} of ${fileName} uploaded successfully`);
+    return true;
   } catch (error) {
     console.error("Error uploading chunk:", error);
-    throw error; // 抛出错误，让Promise.all可以捕获
+    // throw error; 抛出异常让Promise.all可以捕获
+    return false;
   }
 };
 
