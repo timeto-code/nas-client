@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import ConfirmDialog from "@/components/ConfirmDialog";
+import UploadProgress from "@/components/file-explorer/UploadProgress";
 import FolderPage from "@/components/file-explorer/content/FolderPage";
 import Navbar from "@/components/file-explorer/navbar/Navbar";
 import { Suspense } from "react";
@@ -20,6 +21,7 @@ const page = async () => {
         </Suspense>
       </div>
       <ConfirmDialog />
+      <UploadProgress />
     </div>
   );
 };
