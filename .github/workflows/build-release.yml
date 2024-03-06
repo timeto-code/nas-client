@@ -45,9 +45,12 @@ jobs:
           mkdir client/keys
           cp -r settings client/settings
           mv client/settings/settings.template.json client/settings/settings.json
+          cp -r settings client/settings
+          mv client/settings/settings.template.json client/settings/settings.json
           cp -r .next client/.next
           cp -r public client/public
           cp next.config.mjs client/next.config.mjs
+          cp .env client/.env.production
           cp .env client/.env.production
           cp package.json client/package.json
           cp package-lock.json client/package-lock.json
