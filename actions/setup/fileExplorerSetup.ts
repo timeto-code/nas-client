@@ -14,12 +14,6 @@ export const getKeyPath = () => {
 export const getSettings = async () => {
   const serverUrl = getServerUrl();
   const { subject, issuer, audience } = jwtConfig();
-
-  console.log("serverUrl", serverUrl);
-  console.log("subject", subject);
-  console.log("issuer", issuer);
-  console.log("audience", audience);
-
   return {
     serverUrl,
     subject,

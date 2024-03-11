@@ -1,10 +1,7 @@
 import { getSettings } from "@/actions/setup/fileExplorerSetup";
-import { __root_dir } from "@/utils/root-dir";
-import fs from "fs";
-import { NextRequest, NextResponse } from "next/server";
-import path from "path";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   const settings = await getSettings();
 
   return NextResponse.json(settings);
