@@ -4,11 +4,28 @@ import { __root_dir } from "@/utils/root-dir";
 import axios from "axios";
 import fs from "fs";
 import path from "path";
-import { settingsPath } from "../settings";
+import { getServerUrl, jwtConfig, settingsPath } from "../settings";
 
 // 获取公钥路径
 export const getKeyPath = () => {
   return path.join(__root_dir, "keys", "public-key.pem");
+};
+
+export const getSettings = async () => {
+  const serverUrl = getServerUrl();
+  const { subject, issuer, audience } = jwtConfig();
+
+  console.log("serverUrl", serverUrl);
+  console.log("subject", subject);
+  console.log("issuer", issuer);
+  console.log("audience", audience);
+
+  return {
+    serverUrl,
+    subject,
+    issuer,
+    audience,
+  };
 };
 
 // 更新服务器地址

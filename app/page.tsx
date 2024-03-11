@@ -6,6 +6,8 @@ import Toast from "@/components/Toast";
 import Welcome from "@/components/Welcome";
 import LogoutButton from "@/components/file-explorer/navbar/LogoutButton";
 import { Toaster } from "@/components/ui/toaster";
+import { Button } from "@/components/ui/button";
+import SetupGear from "@/components/setup/SetupGear";
 // import authUser from "@/lib/authUser";
 
 export default async function Home() {
@@ -34,8 +36,8 @@ export default async function Home() {
         </div>
       </div>
       <div className="fixed top-5 right-5 flex items-center gap-5">
-        <GenerateNewKey />
         <ThemeSwitch />
+        <SetupGear />
         <LogoutButton />
       </div>
       <Toast />

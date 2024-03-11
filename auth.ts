@@ -31,10 +31,10 @@ export const {
           console.log("jwt 生成成功");
 
           const serverInfo = await axios.get("/api/setup");
-          const { server } = serverInfo.data;
+          const { serverUrl } = serverInfo.data;
 
           const userRes = await axios.post(
-            `${server}/api/user/login/fetch`,
+            `${serverUrl}/api/user/login/fetch`,
             data,
             {
               headers: {
@@ -47,7 +47,7 @@ export const {
           console.log(`用户获取成功 [${user.id}]`);
 
           const folderRes = await axios.get(
-            `${server}/api/folder/login/fetchUserRoot/${user.id}`,
+            `${serverUrl}/api/folder/login/fetchUserRoot/${user.id}`,
             {
               headers: {
                 Authorization: `Bearer ${jwt}`,

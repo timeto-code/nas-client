@@ -1,11 +1,12 @@
 import {
   checkServerAddress,
+  getSettings,
   setJwtAudience,
   setJwtIssuer,
   setJwtSubject,
 } from "@/actions/setup/fileExplorerSetup";
 import styles from "@/styles/Setup.module.scss";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { Label } from "../ui/label";
 import InputStatus from "./InputStatus";
@@ -64,6 +65,28 @@ const SetupInput = ({ label, title, placeholder, actionName }: Props) => {
     });
   };
 
+  useEffect(() => {
+    const fetch = async () => {
+      const { serverUrl, audience, issuer, subject } = await getSettings();
+      switch (label) {
+        case "服务器地址":
+          setValue(serverUrl || "");
+          break;
+        case "JWT 签名主题":
+          setValue(subject || "");
+          break;
+        case "JWT 签发者":
+          setValue(issuer || "");
+          break;
+        case "JWT 接收方":
+          setValue(audience || "");
+          break;
+      }
+    };
+
+    fetch();
+  }, [label]);
+
   return (
     <div className="flex h-[52px] flex-col pt-[5px] relative">
       <Label htmlFor="audience" className="flex items-center">
@@ -75,6 +98,7 @@ const SetupInput = ({ label, title, placeholder, actionName }: Props) => {
       <input
         id="audience"
         className={`border-b h-7 border-t-0 border-l-0 border-r-0 rounded-none p-0 focus:outline-none focus:ring-0 outline-none ring-0 bg-transparent text-base ${styles.input}`}
+        value={value}
         onChange={handleChange}
         onBlur={handleSave}
         onKeyDown={handleKeyDown}

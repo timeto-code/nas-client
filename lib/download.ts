@@ -9,9 +9,9 @@ const downlaod = async (link: string, name: string) => {
     console.log("jwt 生成成功");
 
     const serverInfo = await axios.get("/api/setup");
-    const { server } = serverInfo.data;
+    const { serverUrl } = serverInfo.data;
 
-    const res = await axios.get(`${server}/api/file/token/${link}`, {
+    const res = await axios.get(`${serverUrl}/api/file/token/${link}`, {
       headers: {
         Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",

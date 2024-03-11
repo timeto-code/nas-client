@@ -3,6 +3,7 @@
 import uploadFiles from "@/lib/chunks";
 import { useFolderStore } from "@/lib/stores/useFolderStore";
 import { useToastStore } from "@/lib/stores/useToastStore";
+import { useCancelUploadStore } from "@/lib/stores/useUploadStore";
 import Image from "next/image";
 import React, { useRef, useTransition } from "react";
 
@@ -27,6 +28,8 @@ const UploadFileButton = () => {
         return;
       }
 
+      useCancelUploadStore.setState({ cancel: false });
+      useCancelUploadStore.setState({ allUploadDone: false });
       await uploadFiles(files, folderId);
       useFolderStore.setState((state) => ({ refresh: !state.refresh }));
     });

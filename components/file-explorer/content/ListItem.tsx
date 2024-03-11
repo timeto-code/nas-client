@@ -209,7 +209,7 @@ const ListItem = ({
     <div
       title={item.name}
       className={cn(
-        "group flex items-center gap-2 h-[30px] rounded-sm hover:bg-zinc-300/50 dark:hover:bg-[#34343b] px-2",
+        "group flex items-center gap-2 h-[30px] rounded-sm hover:bg-zinc-300/50 dark:hover:bg-[#34343b] px-2 mt-1",
         focusedItemId === item.id && "bg-zinc-300/50 dark:bg-[#34343b]"
       )}
       onDoubleClick={() => handleDubClick(item)}

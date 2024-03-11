@@ -8,6 +8,7 @@ import RootFolderButton from "./RootFolderButton";
 import TableSwitchButton from "./TableSwitchButton";
 import UpButton from "./UpButton";
 import UploadFileButton from "./UploadFileButton";
+import HomeButton from "@/components/HomeButton";
 
 const Navbar = () => {
   return (
@@ -27,6 +28,7 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         <ThemeSwitch />
         <LogoutButton />
+        <HomeButton />
       </div>
     </div>
   );

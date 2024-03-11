@@ -1,6 +1,9 @@
 "use client";
 
-import { useUploadStore } from "@/lib/stores/useUploadStore";
+import {
+  useCancelUploadStore,
+  useUploadStore,
+} from "@/lib/stores/useUploadStore";
 import { cn } from "@/lib/utils";
 import bytes from "bytes";
 import { useEffect, useState } from "react";
@@ -12,10 +15,12 @@ import {
   AlertDialogFooter,
 } from "../ui/alert-dialog";
 import { Progress } from "../ui/progress";
+import { Button } from "../ui/button";
 
 const UploadProgress = () => {
   const files = useUploadStore((state) => state.files);
   const clearFiles = useUploadStore((state) => state.clearFiles);
+  const allUploadDone = useCancelUploadStore((state) => state.allUploadDone);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -31,22 +36,33 @@ const UploadProgress = () => {
     setOpen(false);
   };
 
+  const handleCancel = () => {
+    useCancelUploadStore.setState({ cancel: true });
+    // clearFiles();
+    // setOpen(false);
+  };
+
   if (files.length === 0) return null;
 
   return (
     <AlertDialog open={open} onOpenChange={handleClose}>
       <AlertDialogContent>
         {files.map((file) => (
-          <div key={file.id} className="flex flex-col gap-1 overflow-hidden">
-            <div className="flex justify-between relative overflow-hidden gap-14">
+          <div
+            key={file.id}
+            className="flex flex-col gap-[2px] overflow-hidden"
+          >
+            <div className="flex justify-between relative overflow-hidden gap-7">
               <div className="text-nowrap truncate">{file.name}</div>
-              <div className="flex gap-1 items-end  text-sm">
+              <div className="flex gap-1 items-center text-sm">
                 {file.status === "success" ? (
                   <span className="text-green-500">
                     {bytes(file.progressSize, { decimalPlaces: 1 })}
                   </span>
                 ) : file.status === "error" ? (
-                  <span className="text-red-500">上传失败</span>
+                  <span className="text-red-500 w-14">上传失败</span>
+                ) : file.status === "cancel" ? (
+                  <span className="text-gray-500 w-11">已取消</span>
                 ) : (
                   <span className="text-blue-500">
                     {bytes(file.progressSize, { decimalPlaces: 1 })}
@@ -59,8 +75,17 @@ const UploadProgress = () => {
           </div>
         ))}
         <AlertDialogFooter>
-          <AlertDialogCancel className="hidden">取消上传</AlertDialogCancel>
-          <AlertDialogAction>关闭</AlertDialogAction>
+          {/* <AlertDialogCancel onClick={handleCancel} disabled={allUploadDone}>
+            取消上传
+          </AlertDialogCancel> */}
+          <Button
+            variant="outline"
+            onClick={handleCancel}
+            disabled={allUploadDone}
+          >
+            取消上传
+          </Button>
+          <AlertDialogAction disabled={!allUploadDone}>关闭</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
