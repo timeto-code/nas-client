@@ -43,8 +43,7 @@ jobs:
         run: |
           mkdir client
           mkdir client/keys
-          cp -r settings client/settings
-          mv client/settings/settings.template.json client/settings/settings.json
+          cp settings.template.json client/settings.json
           cp -r .next client/.next
           cp -r public client/public
           cp next.config.mjs client/next.config.mjs
@@ -66,8 +65,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.1.1
-          release_name: v1.1.1
+          tag_name: v1.2.0
+          release_name: v1.2.0
           draft: false
           prerelease: false
 

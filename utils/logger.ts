@@ -1,6 +1,6 @@
+import { __root_dir } from "@/utils/root-dir";
 import path from "path";
 import { createLogger, format, transports } from "winston";
-import { env } from "./env.confi";
 
 const logger = createLogger({
   // 设置日志的最低级别为"debug"，即只记录"info"级别以上的日志。
@@ -50,7 +50,7 @@ const logger = createLogger({
       level: "debug",
       maxsize: 5242880,
       maxFiles: 5,
-      dirname: path.join(env.PROJECT_ROOT!, "logs"),
+      dirname: path.join(__root_dir, "logs"),
     }),
 
     // 打印info级别以上的所有日志
@@ -59,7 +59,7 @@ const logger = createLogger({
       level: "info",
       maxsize: 5242880,
       maxFiles: 5,
-      dirname: path.join(env.PROJECT_ROOT!, "logs"),
+      dirname: path.join(__root_dir, "logs"),
     }),
 
     // 打印warn级别以上的所有日志
@@ -68,7 +68,7 @@ const logger = createLogger({
       level: "warn",
       maxsize: 5242880,
       maxFiles: 5,
-      dirname: path.join(env.PROJECT_ROOT!, "logs"),
+      dirname: path.join(__root_dir, "logs"),
     }),
 
     // 打印error级别以上的所有日志
@@ -77,7 +77,7 @@ const logger = createLogger({
       level: "error",
       maxsize: 5242880,
       maxFiles: 5,
-      dirname: path.join(env.PROJECT_ROOT!, "logs"),
+      dirname: path.join(__root_dir, "logs"),
     }),
   ],
 });

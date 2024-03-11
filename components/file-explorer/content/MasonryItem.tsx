@@ -1,4 +1,4 @@
-import FileIcon from "@/components/FileIcon";
+import FileIcon from "@/components/file-explorer/FileIcon";
 import downlaod from "@/lib/download";
 import { useFolderStore } from "@/lib/stores/useFolderStore";
 import { File, Folder } from "@prisma/client";
@@ -26,15 +26,15 @@ const MasonryItem = ({ item }: MasonryItemProps) => {
   };
 
   return (
-    <div className="w-20" onDoubleClick={handleDoubleClick}>
+    <div className="w-20" title={item.name} onDoubleClick={handleDoubleClick}>
       <div className="flex flex-col items-center group hover:bg-sky-300/30 dark:hover:bg-sky-200/30 p-2 transition-all duration-300 rounded-[1px]">
         <FileIcon
-          className="cursor-pointer group-hover:scale-105 transition-all duration-300 "
+          className="group-hover:scale-105 transition-all duration-300 "
           item={item}
           width={50}
           height={50}
         />
-        <p className="text-xs text-center break-all w-full group-hover:scale-105 transition-all cursor-default">
+        <p className="text-xs text-center break-all w-full line-clamp-4 group-hover:scale-105 transition-all cursor-default">
           {item.name}
         </p>
       </div>

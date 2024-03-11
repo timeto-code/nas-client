@@ -1,11 +1,13 @@
 import { auth } from "@/auth";
 import AppCard from "@/components/AppCard";
-import GenerateNewKey from "@/components/GenerateNewKey";
+import GenerateNewKey from "@/components/file-explorer/GenerateNewKey";
 import ThemeSwitch from "@/components/ThemeSwitch";
 import Toast from "@/components/Toast";
 import Welcome from "@/components/Welcome";
 import LogoutButton from "@/components/file-explorer/navbar/LogoutButton";
 import { Toaster } from "@/components/ui/toaster";
+import { Button } from "@/components/ui/button";
+import SetupGear from "@/components/setup/SetupGear";
 // import authUser from "@/lib/authUser";
 
 export default async function Home() {
@@ -27,15 +29,15 @@ export default async function Home() {
           />
           <AppCard name="AIGC 展览馆" src="/images/aigc-logoImg.svg" />
           <AppCard
-            name="私人影院"
+            name="影音中心"
             src="/images/d_glasses_cinema_icon_190883.svg"
           />
           <AppCard src="/images/cave_man_emoticon_emoji_sticker_inventor_icon.svg" />
         </div>
       </div>
       <div className="fixed top-5 right-5 flex items-center gap-5">
-        <GenerateNewKey />
         <ThemeSwitch />
+        <SetupGear />
         <LogoutButton />
       </div>
       <Toast />

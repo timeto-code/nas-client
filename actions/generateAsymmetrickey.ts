@@ -1,10 +1,11 @@
 "use server";
 
+import { __root_dir } from "@/utils/root-dir";
 import logger from "@/utils/logger";
 import crypto from "crypto";
 import fs from "fs/promises";
 import path from "path";
-import { env } from "process";
+import { privateKeyPath, publicKeyPath } from "./settings";
 
 export const generateAsymmetrickey = async () => {
   try {
@@ -12,16 +13,16 @@ export const generateAsymmetrickey = async () => {
     const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
 
     // 确保key目录存在，如果不存在则创建
-    const keyDirPath = path.resolve(env.PROJECT_ROOT!, "keys");
+    const keyDirPath = path.resolve(__root_dir, "keys");
     await fs.mkdir(keyDirPath, { recursive: true });
 
     // 将公钥和私钥写入文件
     await fs.writeFile(
-      process.env.ASYMMETRIC_PUBLIC_KEY!,
+      publicKeyPath,
       publicKey.export({ type: "spki", format: "pem" })
     );
     await fs.writeFile(
-      process.env.ASYMMETRIC_PRIVATE_KEY!,
+      privateKeyPath,
       privateKey.export({ type: "pkcs8", format: "pem" })
     );
 

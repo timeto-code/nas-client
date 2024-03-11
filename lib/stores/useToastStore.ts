@@ -5,6 +5,11 @@ interface ToastStore {
   title: string;
   varient: "default" | "destructive" | "success" | "warning";
   description: string;
+  setToast: (
+    title: string,
+    description: string,
+    varient: "default" | "destructive" | "success" | "warning"
+  ) => void;
 }
 
 export const useToastStore = create<ToastStore>((set) => ({
@@ -12,4 +17,15 @@ export const useToastStore = create<ToastStore>((set) => ({
   title: "",
   varient: "default",
   description: "",
+  setToast: (
+    title: string,
+    description: string,
+    varient: "default" | "destructive" | "success" | "warning"
+  ) =>
+    set((state) => ({
+      title,
+      description,
+      varient,
+      refresh: !state.refresh,
+    })),
 }));

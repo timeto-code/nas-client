@@ -2,12 +2,12 @@ import { auth } from "@/auth";
 import logger from "@/utils/logger";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import generateJWT from "./generateJWT";
-import { server } from "./server";
+import { getServerUrl } from "./settings";
 
 const date = new Date().toLocaleString("zh-CN", { hour12: false });
 
 const http = axios.create({
-  baseURL: `${server}`,
+  baseURL: getServerUrl(),
   headers: {
     "Content-Type": "application/json",
   },

@@ -2,7 +2,7 @@
 
 import { generateAsymmetrickey } from "@/actions/generateAsymmetrickey";
 import { useToastStore } from "@/lib/stores/useToastStore";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const GenerateNewKey = () => {
   return (

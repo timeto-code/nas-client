@@ -5,7 +5,7 @@ export type ProgressFile = {
   name: string;
   size: number;
   totalChunks: number;
-  status: "pending" | "uploading" | "success" | "error";
+  status: "pending" | "uploading" | "success" | "error" | "cancel";
   progress: number;
   progressSize: number;
 };
@@ -16,7 +16,7 @@ interface UploadStore {
   clearFiles: () => void;
   setStatus: (
     id: string,
-    status: "pending" | "uploading" | "success" | "error"
+    status: "pending" | "uploading" | "success" | "error" | "cancel"
   ) => void;
   setProgress: (id: string, chunkIndex: number, chunkSize: number) => void;
 }
@@ -31,7 +31,7 @@ export const useUploadStore = create<UploadStore>((set) => ({
   },
   setStatus: (
     id: string,
-    status: "pending" | "uploading" | "success" | "error"
+    status: "pending" | "uploading" | "success" | "error" | "cancel"
   ) => {
     set((state) => ({
       files: state.files.map((file) =>
@@ -52,4 +52,14 @@ export const useUploadStore = create<UploadStore>((set) => ({
       ),
     }));
   },
+}));
+
+interface CancelUploadStore {
+  cancel: boolean;
+  allUploadDone: boolean;
+}
+
+export const useCancelUploadStore = create<CancelUploadStore>((set) => ({
+  cancel: false,
+  allUploadDone: false,
 }));
