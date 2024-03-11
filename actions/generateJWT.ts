@@ -1,11 +1,10 @@
-import { env } from "@/utils/env.confi";
 import logger from "@/utils/logger";
 import crypto from "crypto";
 import fs from "fs/promises";
 import { SignJWT } from "jose";
 import { Session } from "next-auth";
 import { v4 as uuidv4 } from "uuid";
-import { privateKeyPath, publicKeyPath } from "./generateAsymmetrickey";
+import { jwtConfig, privateKeyPath, publicKeyPath } from "./settings";
 
 // 转换密钥
 const convertKeys = async () => {
@@ -37,6 +36,7 @@ const convertKeys = async () => {
 // 签发JWT
 const generateJWT = async (session: Session | null) => {
   try {
+    const { subject, issuer, audience } = jwtConfig();
     const { privateKey } = await convertKeys();
     const payload = { id: session?.user?.id ?? "anonymous" };
     const jwt = await new SignJWT({ ...payload })
@@ -46,13 +46,13 @@ const generateJWT = async (session: Session | null) => {
         typ: "JWT",
       })
       // 设置主题
-      .setSubject(env.JWT_SUBJECT)
+      .setSubject(subject)
       // 设置签发时间
       .setIssuedAt()
       // 设置签发者
-      .setIssuer(env.JWT_ISSUER)
+      .setIssuer(issuer)
       // 设置接收者
-      .setAudience(env.JWT_AUDIENCE)
+      .setAudience(audience)
       // 设置过期时间为3分钟
       .setExpirationTime("10 minute")
       // 设置JWT ID

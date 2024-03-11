@@ -27,7 +27,7 @@ export default async function Home() {
           />
           <AppCard name="AIGC 展览馆" src="/images/aigc-logoImg.svg" />
           <AppCard
-            name="私人影院"
+            name="影音中心"
             src="/images/d_glasses_cinema_icon_190883.svg"
           />
           <AppCard src="/images/cave_man_emoticon_emoji_sticker_inventor_icon.svg" />

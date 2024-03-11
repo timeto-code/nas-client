@@ -1,3 +1,4 @@
+import { __root_dir } from "@/utils/root-dir";
 import path from "path";
 import { createLogger, format, transports } from "winston";
 
@@ -49,7 +50,7 @@ const logger = createLogger({
       level: "debug",
       maxsize: 5242880,
       maxFiles: 5,
-      dirname: path.join(__dirname, "logs"),
+      dirname: path.join(__root_dir, "logs"),
     }),
 
     // 打印info级别以上的所有日志
@@ -58,7 +59,7 @@ const logger = createLogger({
       level: "info",
       maxsize: 5242880,
       maxFiles: 5,
-      dirname: path.join(__dirname, "logs"),
+      dirname: path.join(__root_dir, "logs"),
     }),
 
     // 打印warn级别以上的所有日志
@@ -67,7 +68,7 @@ const logger = createLogger({
       level: "warn",
       maxsize: 5242880,
       maxFiles: 5,
-      dirname: path.join(__dirname, "logs"),
+      dirname: path.join(__root_dir, "logs"),
     }),
 
     // 打印error级别以上的所有日志
@@ -76,7 +77,7 @@ const logger = createLogger({
       level: "error",
       maxsize: 5242880,
       maxFiles: 5,
-      dirname: path.join(__dirname, "logs"),
+      dirname: path.join(__root_dir, "logs"),
     }),
   ],
 });

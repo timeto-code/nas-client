@@ -52,6 +52,7 @@ const Setup = () => {
           </div>
         </div>
       </div>
+      <Toast />
     </div>
   );
 };
