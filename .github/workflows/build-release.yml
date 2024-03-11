@@ -37,13 +37,15 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          mv settings.template.json settings.json
+          npm run build
 
       - name: Archive production artifacts
         run: |
           mkdir client
           mkdir client/keys
-          cp settings.template.json client/settings.json
+          cp settings.json client/settings.json
           cp -r .next client/.next
           cp -r public client/public
           cp next.config.mjs client/next.config.mjs
