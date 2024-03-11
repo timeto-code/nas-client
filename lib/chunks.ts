@@ -63,6 +63,22 @@ const uploadFileInChunks = async (
   const setProgress = useUploadStore.getState().setProgress;
   const setStatus = useUploadStore.getState().setStatus;
   let uploadStatus = true;
+
+  const setFiles = useUploadStore.getState().setFiles;
+  const progrssFile: ProgressFile = {
+    id: `${timestamp}${folderId}-${file.name}`,
+    name: file.name,
+    size: file.size,
+    totalChunks,
+    progress: 0,
+    status: "pending",
+    progressSize: 0,
+  };
+  setFiles(progrssFile);
+
+  const setProgress = useUploadStore.getState().setProgress;
+  const setStatus = useUploadStore.getState().setStatus;
+  let uploadStatus = true;
   for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
     // 检查是否取消上传
     const cancel = useCancelUploadStore.getState().cancel;
