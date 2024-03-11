@@ -1,7 +1,7 @@
 import { RenameFileDto } from "@/DTOs/FileDTOs";
 import { UpdateFileNameById, deleteFile } from "@/actions/api/file";
 import { deleteFolder, updateFolderNameById } from "@/actions/api/folder";
-import FileIcon from "@/components/FileIcon";
+import FileIcon from "@/components/file-explorer/FileIcon";
 import Spinner from "@/components/Spinner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";

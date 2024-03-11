@@ -5,13 +5,14 @@ import fs from "fs/promises";
 import { SignJWT } from "jose";
 import { Session } from "next-auth";
 import { v4 as uuidv4 } from "uuid";
+import { privateKeyPath, publicKeyPath } from "./generateAsymmetrickey";
 
 // 转换密钥
 const convertKeys = async () => {
   try {
     // 检查密钥文件是否存在
-    await fs.access(env.ASYMMETRIC_PUBLIC_KEY!);
-    await fs.access(env.ASYMMETRIC_PRIVATE_KEY!);
+    await fs.access(publicKeyPath);
+    await fs.access(privateKeyPath);
   } catch (error) {
     logger.error(`密钥文件不存在: ${error}`);
     throw new Error("密钥文件不存在");
@@ -19,14 +20,8 @@ const convertKeys = async () => {
 
   try {
     // 读取公钥和私钥文件内容
-    const publicKeyPem = await fs.readFile(
-      process.env.ASYMMETRIC_PUBLIC_KEY!,
-      "utf8"
-    );
-    const privateKeyPem = await fs.readFile(
-      process.env.ASYMMETRIC_PRIVATE_KEY!,
-      "utf8"
-    );
+    const publicKeyPem = await fs.readFile(publicKeyPath, "utf8");
+    const privateKeyPem = await fs.readFile(privateKeyPath, "utf8");
 
     // 创建公钥和私钥对象
     const publicKey = crypto.createPublicKey(publicKeyPem);

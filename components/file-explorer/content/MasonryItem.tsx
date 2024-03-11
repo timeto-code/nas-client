@@ -1,4 +1,4 @@
-import FileIcon from "@/components/FileIcon";
+import FileIcon from "@/components/file-explorer/FileIcon";
 import downlaod from "@/lib/download";
 import { useFolderStore } from "@/lib/stores/useFolderStore";
 import { File, Folder } from "@prisma/client";

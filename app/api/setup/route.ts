@@ -1,8 +1,7 @@
-import { env } from "@/utils/env.confi";
 import axios from "axios";
+import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import fs from "fs";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -10,11 +9,7 @@ export const POST = async (req: NextRequest) => {
     const response = await axios.get(`${serverAddress}/connection-test`);
     const { message, url } = await response.data;
     if (message === "successful" && url) {
-      const settingsPtah = path.join(
-        env.PROJECT_ROOT,
-        "settings",
-        "settings.json"
-      );
+      const settingsPtah = path.join(__dirname, "settings", "settings.json");
 
       const config = fs.readFileSync(settingsPtah, "utf-8");
       const configObj = JSON.parse(config);
@@ -31,7 +26,7 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const GET = async (req: NextRequest) => {
-  const settingsPtah = path.join(env.PROJECT_ROOT, "settings", "settings.json");
+  const settingsPtah = path.join(__dirname, "settings", "settings.json");
 
   const settings = fs.readFileSync(settingsPtah, "utf-8");
   const settingsObj = JSON.parse(settings);

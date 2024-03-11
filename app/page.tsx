@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import AppCard from "@/components/AppCard";
-import GenerateNewKey from "@/components/GenerateNewKey";
+import GenerateNewKey from "@/components/file-explorer/GenerateNewKey";
 import ThemeSwitch from "@/components/ThemeSwitch";
 import Toast from "@/components/Toast";
 import Welcome from "@/components/Welcome";
